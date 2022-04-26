@@ -47,6 +47,15 @@ public protocol TransitionHandler: class {
     func forStoryboard<T>(factory: StoryboardFactoryProtocol, to type: T.Type) throws -> TransitionNode<T>
     
     ///
+    /// Methods initaites transition for view controller and return transition node.
+    ///
+    /// - Parameter viewController: Destination view controller.
+    /// - Parameter type: Module input type.
+    /// - Returns: Transition node instance with setups.
+    ///
+    func forViewController<T>(_ viewController: UIViewController, to type: T.Type) -> TransitionNode<T>
+    
+    ///
     /// Methods initiates transition from segue identifier and return transition node.
     ///
     /// - Parameter identifier: Segue identifier for transition.

@@ -25,23 +25,23 @@
 
 
 public final class SegueTransitionNode<T>: GenericTransitionNode<T> {
-	
+    
     /// Contain transition delegate for transition.
-	var transitioningDelegate: UIViewControllerTransitioningDelegate?
-	
+    var transitioningDelegate: UIViewControllerTransitioningDelegate?
+    
     /// Containt segue identifer, for `prepare(for:sender:)` method.
-	var segueIdentifier: String = ""
-	
+    var segueIdentifier: String = ""
+    
     ///
     /// Apply UIViewControllerTransitioningDelegate for current transition.
     ///
     /// - Parameter transitioningDelegate: UIViewControllerTransitioningDelegate instance.
     /// - Returns: Return current transition node.
     ///
-	public func add(transitioningDelegate: UIViewControllerTransitioningDelegate) -> SegueTransitionNode<T> {
-		self.transitioningDelegate = transitioningDelegate
-		return self
-	}
+    public func add(transitioningDelegate: UIViewControllerTransitioningDelegate) -> SegueTransitionNode<T> {
+        self.transitioningDelegate = transitioningDelegate
+        return self
+    }
 
     ///
     /// This method checks if source(root) view controller conforms protocol for embed segues transition.
@@ -61,7 +61,7 @@ public final class SegueTransitionNode<T>: GenericTransitionNode<T> {
     /// - Parameter block: Initialize controller for transition and fire.
     /// - Throws: Throw error, if destination was nil or could not be cast to type or not conform embed segue protocol.
     ///
-	public func then(async: Bool, _ block: @escaping TransitionSetupBlock<T>) throws {
+    public func then(async: Bool, _ block: @escaping TransitionSetupBlock<T>) throws {
 
         let thenBody = {
             self.root.performSegue(withIdentifier: self.segueIdentifier, sender: nil, completion: { segue in
@@ -82,7 +82,7 @@ public final class SegueTransitionNode<T>: GenericTransitionNode<T> {
                         destination = tabBarController
                     } else {
                         for controller in viewControllers {
-                            let moduleInput = (self.customModuleInput != nil) ? self.customModuleInput : destination.moduleInput
+                            let moduleInput = self.customModuleInput?(destination) ?? destination.moduleInput
                             if moduleInput is T || controller is T {
                                 destination = controller
                                 break
@@ -91,18 +91,13 @@ public final class SegueTransitionNode<T>: GenericTransitionNode<T> {
                     }
                 }
                 
-                var output: Any?
+                let destinationModuleInput = self.customModuleInput?(destination) ?? destination.moduleInput
                 
-                let destinationModuleInput = (self.customModuleInput != nil) ? self.customModuleInput : destination.moduleInput
-                if let moduleInput = destinationModuleInput, moduleInput is T {
-                    output = block(destination.moduleInput as! T)
-                } else if destination is T {
-                    output = block(destination as! T)
-                } else {
-                    throw LightRouteError.castError(controller: String(describing: destination.self), type: "\(self.type)")
+                guard let moduleInput = destinationModuleInput as? T else {
+                    throw LightRouteError.castError(controller: "\(self.type)", type: "\(destinationModuleInput)")
                 }
                 
-                segue.source.moduleOutput = output
+                block(moduleInput)
             })
         }
 
@@ -113,15 +108,15 @@ public final class SegueTransitionNode<T>: GenericTransitionNode<T> {
         } else {
             thenBody()
         }
-	}
+    }
 
-	///
+    ///
     /// This method is responsible for the delivery of the controller for the subsequent initialization, then there is a transition.
     ///
     /// - Parameter block: Initialize controller for transition and fire.
     /// - Throws: Throw error, if destination was nil or could not be cast to type.
     ///
-	public override func then(_ block: @escaping TransitionSetupBlock<T>) throws {
+    public override func then(_ block: @escaping TransitionSetupBlock<T>) throws {
         try then(async: true, block)
     }
 }
