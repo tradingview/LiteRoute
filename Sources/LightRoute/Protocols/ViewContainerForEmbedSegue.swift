@@ -1,8 +1,9 @@
 //
-//  StoryboardFactoryProtocol.swift
+//  ViewContainerForEmbedSegue.swift
 //  LightRoute
 //
-//  Copyright © 2016-2017 Vladislav Prusakov <hipsterknights@gmail.com>
+//  Created by Kirill Budevich on 02.04.2018.
+//  Copyright © 2016-2018 Vladislav Prusakov <hipsterknights@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +24,16 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
+import UIKit
 
-/// This protocol a describe that destination controller should be returns.
-public protocol StoryboardFactoryProtocol {
-    
-    /// Instantiate transition view controller.
-    func instantiateTransitionHandler() throws -> UIViewController
+/// This protocol describe that source controller should be have container for embed segue transition.
+public protocol ViewContainerForEmbedSegue: AnyObject {
+
+    ///
+    /// The method of container view for embed segue.
+    ///
+    /// - Parameter identifier: Identifier of the segue.
+    /// - Returns: Container UIView for embed view.
+    ///
+    func containerViewForSegue(_ identifier: String) -> UIView
 }

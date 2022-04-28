@@ -23,6 +23,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// This class is main frame to transition's
 public class GenericTransitionNode<T> {
     

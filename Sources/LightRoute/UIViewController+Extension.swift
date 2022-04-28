@@ -23,6 +23,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 ///
 /// This extension adds public methods for work with LightRoute.
 /// Performs swizzle default `prepare(for:sender:)` method and return transition segue.

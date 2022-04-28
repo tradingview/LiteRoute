@@ -23,6 +23,7 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
 
 public final class SegueTransitionNode<T>: GenericTransitionNode<T> {
     

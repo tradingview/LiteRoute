@@ -23,6 +23,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// The class is responsible for what the user has implemented the transition.
 public final class CustomTransitionNode<T> {
     

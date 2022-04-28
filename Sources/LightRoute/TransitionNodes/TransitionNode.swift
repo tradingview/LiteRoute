@@ -23,6 +23,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// The main class that describes the current transition.
 public final class TransitionNode<T>: GenericTransitionNode<T> {
     

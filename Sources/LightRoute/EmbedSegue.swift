@@ -24,6 +24,8 @@
 //  THE SOFTWARE.
 //
 
+import UIKit
+
 /// Embed segue for embed views via routing
 public class EmbedSegue: UIStoryboardSegue {
     override public func perform() {
@@ -36,9 +38,9 @@ public class EmbedSegue: UIStoryboardSegue {
                 return
         }
 
-        parentViewController.addChildViewController(embedViewController)
+        parentViewController.addChild(embedViewController)
         containerView.addSubview(moduleView)
-        embedViewController.didMove(toParentViewController: parentViewController)
+        embedViewController.didMove(toParent: parentViewController)
 
         moduleView.translatesAutoresizingMaskIntoConstraints = false
 
