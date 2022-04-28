@@ -24,9 +24,10 @@
 //
 
 import Foundation
+import UIKit
 
 /// This protocol describe how do transition beetwen ViewControllers.
-public protocol TransitionHandler: class {
+public protocol TransitionHandler: AnyObject {
     
     ///
     /// The method of initiating the transition in the current storyboard, which depends on the root view controller.
@@ -45,6 +46,15 @@ public protocol TransitionHandler: class {
     /// - Returns: Transition node instance with setups.
     ///
     func forStoryboard<T>(factory: StoryboardFactoryProtocol, to type: T.Type) throws -> TransitionNode<T>
+    
+    ///
+    /// Methods initaites transition for view controller and return transition node.
+    ///
+    /// - Parameter viewController: Destination view controller.
+    /// - Parameter type: Module input type.
+    /// - Returns: Transition node instance with setups.
+    ///
+    func forViewController<T>(_ viewController: UIViewController, to type: T.Type) -> TransitionNode<T>
     
     ///
     /// Methods initiates transition from segue identifier and return transition node.

@@ -1,3 +1,4 @@
+// swift-tools-version:5.3
 //
 // Copyright (c) 2016-2017 Vladislav Prusakov <hipsterknights@gmail.com>
 //
@@ -23,5 +24,5 @@
 import PackageDescription
 
 let package = Package(name: "LightRoute",
-                      dependencies : [],
-                      exclude: ["Tests"])
+                      products: [.library(name: "LightRoute", targets: ["LightRoute"])],
+                      targets: [.target(name: "LightRoute")])
