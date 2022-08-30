@@ -49,18 +49,6 @@ extension UIViewController: TransitionHandler {
         
         return nil
     }
-    
-    /// This property have responsobility about store property for moduleOutput protocols.
-    public var moduleOutput: Any? {
-        get {
-            let box = objc_getAssociatedObject(self, &UIViewController.TransitionHandlerModuleOutput) as? Box
-            return box?.value
-        }
-        set {
-            objc_setAssociatedObject(self, &UIViewController.TransitionHandlerModuleOutput, Box(newValue), objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
-        }
-    }
-    
 
     ///
     /// This methods get moduleInput by selector.
@@ -97,7 +85,6 @@ extension UIViewController: TransitionHandler {
     
     // Key for objc associated objects.
     @nonobjc static var ClosurePrepareForSegueKey = "ru.hipsterknight.lightroute.prepareForSegue"
-    @nonobjc static var TransitionHandlerModuleOutput = "ru.hipsterknight.lightroute.moduleOutput"
     
     // Contain information about current transition segue.
     var configuratePerformSegue: ConfiguratePerformSegue? {
